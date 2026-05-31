@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyensure"
+version = "1.0.0"
+description = "Add preconditions and postconditions to Python functions with a simple decorator and safe AST-based rule evaluation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+authors = [
+    {name = "Sri Chaitan"}
+]
+
+keywords = [
+    "design-by-contract",
+    "contracts",
+    "preconditions",
+    "postconditions",
+    "runtime-validation",
+    "decorators",
+    "ast"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[tool.setuptools.packages.find]
+include = ["pyensure*"]

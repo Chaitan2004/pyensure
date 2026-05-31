@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual env
+venv/
+.venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Pytest
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# Type checkers / linters
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Packaging / metadata
+pip-wheel-metadata/
+
+# IDEs
+.idea/
+
+# Local files
+*.log
