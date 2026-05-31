@@ -1,10 +1,20 @@
 # pyensure
 
-Lightweight Design by Contract for Python with preconditions, postconditions, async support, and AST-powered validation.
+[![PyPI version](https://img.shields.io/pypi/v/pyensure-core)](https://pypi.org/project/pyensure-core/)
+[![Python](https://img.shields.io/pypi/pyversions/pyensure-core)](https://pypi.org/project/pyensure-core/)
+[![License](https://img.shields.io/pypi/l/pyensure-core)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-20%20passed-brightgreen)](#testing)
+[![Type Hints](https://img.shields.io/badge/type--hints-supported-blue)](#)
+[![Async Support](https://img.shields.io/badge/async-supported-success)](#)
+[![AST Powered](https://img.shields.io/badge/AST-powered-orange)](#)
+
+Lightweight Design by Contract for Python with preconditions, postconditions, async support, rule caching, and AST-powered validation.
+
+**Write contracts, not validation boilerplate.**
 
 `pyensure` helps you define runtime contracts for Python functions using a clean decorator-based API.
 
-Instead of scattering validation logic throughout your codebase, define expectations declaratively:
+Instead of scattering validation logic throughout your codebase, define expectations declaratively.
 
 ```python
 from pyensure import ensure
@@ -18,7 +28,26 @@ def withdraw(amount):
 
 ---
 
-## Why pyensure?
+# Installation
+
+```bash
+pip install pyensure-core
+```
+
+# Import
+
+```python
+from pyensure import ensure
+from pyensure import EnsureError
+```
+
+> Package name on PyPI: `pyensure-core`
+>
+> Import name in Python: `pyensure`
+
+---
+
+# Why pyensure?
 
 As applications grow, validation logic often becomes mixed with business logic:
 
@@ -53,9 +82,9 @@ This keeps contracts separate from implementation and makes intent immediately v
 
 ---
 
-## Features
+# Features
 
-### Preconditions
+## Preconditions
 
 Validate function inputs before execution.
 
@@ -71,7 +100,7 @@ def add_one(x):
 
 ---
 
-### Postconditions
+## Postconditions
 
 Validate results after execution.
 
@@ -93,7 +122,7 @@ inside post-condition expressions.
 
 ---
 
-### Attribute Access
+## Attribute Access
 
 Access object attributes directly.
 
@@ -107,7 +136,7 @@ def register(user):
 
 ---
 
-### Function Calls
+## Function Calls
 
 Use helper functions directly inside rules.
 
@@ -128,7 +157,7 @@ No registration required.
 
 ---
 
-### Method Calls
+## Method Calls
 
 Use instance methods inside rules.
 
@@ -147,9 +176,9 @@ def register(user):
 
 ---
 
-### Boolean Expressions
+## Boolean Expressions
 
-#### AND
+### AND
 
 ```python
 @ensure(
@@ -159,7 +188,7 @@ def add(x, y):
     return x + y
 ```
 
-#### OR
+### OR
 
 ```python
 @ensure(
@@ -171,9 +200,9 @@ def access(user):
 
 ---
 
-### Async Support
+## Async Support
 
-`pyensure` works with both synchronous and asynchronous functions.
+Works with both synchronous and asynchronous functions.
 
 ```python
 @ensure(
@@ -191,7 +220,7 @@ await create_user(user)
 
 ---
 
-### Runtime Contract Control
+## Runtime Contract Control
 
 Disable all contract checks globally when needed.
 
@@ -214,7 +243,7 @@ Useful for:
 
 ---
 
-### AST-Based Rule Evaluation
+## AST-Based Rule Evaluation
 
 Rules are parsed using Python's Abstract Syntax Tree (AST).
 
@@ -228,13 +257,9 @@ Benefits:
 
 ---
 
-### Rule Caching
+## Rule Caching
 
 Parsed AST trees are cached internally.
-
-```python
-RULE_CACHE[rule]
-```
 
 Benefits:
 
@@ -244,20 +269,20 @@ Benefits:
 
 ---
 
-### Type Hints
+## Type Hints
 
 The library is fully typed.
 
-This improves:
+Benefits:
 
 * IDE autocomplete
-* static analysis
-* maintainability
-* developer experience
+* Static analysis
+* Better maintainability
+* Improved developer experience
 
 ---
 
-### Custom Exceptions
+## Custom Exceptions
 
 All contract-related failures raise:
 
@@ -277,19 +302,38 @@ except EnsureError as e:
 
 ---
 
-## Installation
+# How It Works
 
-```bash
-pip install pyensure
+```text
+Decorator
+    ↓
+Build Context
+    ↓
+Parse / Cache AST
+    ↓
+Evaluate Preconditions
+    ↓
+Execute Function
+    ↓
+Evaluate Postconditions
 ```
+
+Rules are parsed into Python AST nodes and evaluated against the function context.
+
+The return value of the decorated function is automatically exposed as:
+
+```python
+result
+```
+
+for post-condition validation.
 
 ---
 
-## Quick Start
+# Quick Start
 
 ```python
 from pyensure import ensure
-
 
 @ensure(
     pre=("x > 0",),
@@ -297,7 +341,6 @@ from pyensure import ensure
 )
 def add_one(x):
     return x + 1
-
 
 print(add_one(5))
 ```
@@ -310,9 +353,9 @@ Output:
 
 ---
 
-## Supported Syntax
+# Supported Syntax
 
-### Comparisons
+## Comparisons
 
 ```python
 x > 0
@@ -323,28 +366,28 @@ x == 0
 x != 0
 ```
 
-### Attributes
+## Attributes
 
 ```python
 user.age
 user.balance
 ```
 
-### Function Calls
+## Function Calls
 
 ```python
 is_even(x)
 validate_email(email)
 ```
 
-### Method Calls
+## Method Calls
 
 ```python
 user.get_age()
 user.is_active()
 ```
 
-### Boolean Operators
+## Boolean Operators
 
 ```python
 x > 0 and y > 0
@@ -352,7 +395,7 @@ x > 0 and y > 0
 x > 0 or y > 0
 ```
 
-### Constants
+## Constants
 
 ```python
 10
@@ -363,9 +406,9 @@ False
 
 ---
 
-## Limitations
+# Limitations
 
-### Chained Comparisons Are Not Supported
+## Chained Comparisons Are Not Supported
 
 The following is NOT supported:
 
@@ -381,7 +424,33 @@ x > 1 and x < 10
 
 ---
 
-### Unsupported Python Syntax
+## Single Rule Syntax
+
+For a single rule, use:
+
+```python
+@ensure(pre=("x > 0",))
+```
+
+or
+
+```python
+@ensure(pre=["x > 0"])
+```
+
+Remember the trailing comma for single-element tuples.
+
+Incorrect:
+
+```python
+@ensure(pre=("x > 0"))
+```
+
+This is interpreted as a string, not a tuple.
+
+---
+
+## Unsupported Python Syntax
 
 The following are intentionally unsupported:
 
@@ -397,13 +466,13 @@ lambda x: x + 1
 {x: y}
 ```
 
-and other complex Python constructs.
+and other advanced Python constructs.
 
 `pyensure` focuses on runtime contracts rather than executing arbitrary Python code.
 
 ---
 
-## Example: Business Rule Validation
+# Example: Business Rule Validation
 
 ```python
 class User:
@@ -428,9 +497,15 @@ def withdraw(user, amount):
 
 ---
 
-## Testing
+# Testing
 
-The library includes automated tests covering:
+Current test status:
+
+```text
+20 passed
+```
+
+Covered functionality:
 
 * Preconditions
 * Postconditions
@@ -442,10 +517,11 @@ The library includes automated tests covering:
 * Global enable/disable
 * AST evaluation
 * Error handling
+* Rule caching
 
 ---
 
-## Design Goals
+# Design Goals
 
 * Simple API
 * Minimal dependencies
@@ -457,13 +533,13 @@ The library includes automated tests covering:
 
 ---
 
-## License
+# License
 
 MIT License
 
 ---
 
-## Roadmap
+# Roadmap
 
 Future improvements may include:
 
