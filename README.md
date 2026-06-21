@@ -1,5 +1,6 @@
 # pyensure
 
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/pyensure-core?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/pyensure-core)
 [![PyPI version](https://img.shields.io/pypi/v/pyensure-core)](https://pypi.org/project/pyensure-core/)
 [![Python](https://img.shields.io/pypi/pyversions/pyensure-core)](https://pypi.org/project/pyensure-core/)
 [![License](https://img.shields.io/pypi/l/pyensure-core)](LICENSE)
